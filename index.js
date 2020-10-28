@@ -2,15 +2,6 @@
 const initialConfiguration = [1, 0, 1, 1];
 const K = 2;
 
-const getNextCellState = (leftNeighbour, rightNeighbour) => {
-  if (leftNeighbour && rightNeighbour) // both excited
-    return 0;
-  if (leftNeighbour || rightNeighbour) // one excited
-    return 1;
-  if (!leftNeighbour && !rightNeighbour) // neither excited
-    return 0;
-}
-
 const nextStep = (cells) => {
   if (!cells.includes(1)) return cells;
 
@@ -18,11 +9,11 @@ const nextStep = (cells) => {
   
   for (let i = 0; i < cells.length; i++) {
     if (i === 0) // first cell
-      newConfiguration[i] = getNextCellState(cells[cells.length - 1], cells[i + 1]);
+      newConfiguration[i] = cells[cells.length - 1] === cells[i + 1] ? 0 : 1;
     else if (i === (cells.length - 1)) // last cell
-      newConfiguration[i] = getNextCellState(cells[i - 1], cells[0]);
+      newConfiguration[i] = cells[i - 1] === cells[0] ? 0 : 1;
     else
-      newConfiguration[i] = getNextCellState(cells[i - 1], cells[i + 1]);
+      newConfiguration[i] = cells[i - 1] === cells[i + 1] ? 0 : 1;
   }
   return newConfiguration;
 }
